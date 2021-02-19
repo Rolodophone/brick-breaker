@@ -1,5 +1,7 @@
 package net.rolodophone.brickbreaker
 
+import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Application.LOG_DEBUG
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -12,12 +14,11 @@ import net.rolodophone.brickbreaker.screen.GameScreen
 
 const val BATCH_SIZE = 1000
 
-class BrickBreaker: KtxGame<BrickBreakerScreen>() {
-	companion object {
-		val log = logger<BrickBreaker>()
-	}
+private val log = logger<BrickBreaker>()
 
+class BrickBreaker: KtxGame<BrickBreakerScreen>() {
 	val batch: Batch by lazy { SpriteBatch(BATCH_SIZE) }
+	val engine: Engine by lazy { PooledEngine() }
 
 	override fun create() {
 		Gdx.app.logLevel = LOG_DEBUG
