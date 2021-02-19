@@ -10,15 +10,17 @@ import ktx.log.logger
 import net.rolodophone.brickbreaker.screen.BrickBreakerScreen
 import net.rolodophone.brickbreaker.screen.GameScreen
 
-private val LOG = logger<BrickBreaker>()
+const val BATCH_SIZE = 1000
 
 class BrickBreaker: KtxGame<BrickBreakerScreen>() {
-	val batch: Batch by lazy { SpriteBatch() }
+	companion object {
+		val log = logger<BrickBreaker>()
+	}
+
+	val batch: Batch by lazy { SpriteBatch(BATCH_SIZE) }
 
 	override fun create() {
 		Gdx.app.logLevel = LOG_DEBUG
-
-		LOG.debug { "Create game instance" }
 
 		addScreen(GameScreen(this))
 
@@ -26,6 +28,14 @@ class BrickBreaker: KtxGame<BrickBreakerScreen>() {
 	}
 
 	override fun dispose() {
+		log.debug { "Disposing game" }
+
+		super.dispose()
+
+		log.debug {
+			val sb = batch as SpriteBatch
+			"Max sprites in batch: ${sb.maxSpritesInBatch}; size of batch: $BATCH_SIZE"
+		}
 		batch.dispose()
 	}
 }

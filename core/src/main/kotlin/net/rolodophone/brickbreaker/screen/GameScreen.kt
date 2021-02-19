@@ -9,15 +9,17 @@ import ktx.log.debug
 import ktx.log.logger
 import net.rolodophone.brickbreaker.BrickBreaker
 
-private val LOG = logger<GameScreen>()
-
 class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
+	companion object {
+		val log = logger<GameScreen>()
+	}
+
 	private val viewport = FitViewport(9 * 32f, 16 * 32f) //288x512
 	private val texture = Texture(Gdx.files.internal("graphics/paddle_normal.png"))
 	private val sprite = Sprite(texture)
 
 	override fun show() {
-		LOG.debug { "First screen shown" }
+		log.debug { "First screen shown" }
 		sprite.setPosition(1f, 1f)
 	}
 
