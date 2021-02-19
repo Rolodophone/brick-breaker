@@ -19,7 +19,6 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 	private val sprite = Sprite(texture)
 
 	override fun show() {
-		log.debug { "First screen shown" }
 		sprite.setPosition(1f, 1f)
 	}
 
