@@ -21,8 +21,6 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			with<GraphicsComponent> {
 				sprite.run {
 					setRegion(playerTexture)
-					setSize(texture.width.toFloat(), texture.height.toFloat())
-					setOriginCenter()
 				}
 			}
 			with<PaddleComponent>()
