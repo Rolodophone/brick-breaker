@@ -2,7 +2,6 @@ package net.rolodophone.brickbreaker.screen
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.math.MathUtils
 import ktx.ashley.entity
 import ktx.ashley.with
 import net.rolodophone.brickbreaker.BrickBreaker
@@ -16,8 +15,8 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 	override fun show() {
 		engine.entity {
 			with<TransformComponent> {
-				position.set(MathUtils.random(0f, gameViewport.worldWidth), MathUtils.random(0f, gameViewport.worldHeight), 0f)
-				size.set(playerTexture.width.toFloat(), playerTexture.height.toFloat())
+				setSizeFromTexture(playerTexture)
+				rect.setCenter(gameViewport.worldWidth / 2f, 20f)
 			}
 			with<GraphicsComponent> {
 				sprite.run {
