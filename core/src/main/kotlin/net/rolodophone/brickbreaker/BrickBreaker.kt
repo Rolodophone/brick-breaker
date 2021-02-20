@@ -10,11 +10,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import ktx.app.KtxGame
 import ktx.log.debug
 import ktx.log.logger
+import net.rolodophone.brickbreaker.ecs.system.PlayerInputSystem
 import net.rolodophone.brickbreaker.ecs.system.RenderSystem
 import net.rolodophone.brickbreaker.screen.BrickBreakerScreen
 import net.rolodophone.brickbreaker.screen.GameScreen
 
-const val BATCH_SIZE = 1000
+private const val BATCH_SIZE = 1000
 
 private val log = logger<BrickBreaker>()
 
@@ -22,6 +23,7 @@ class BrickBreaker: KtxGame<BrickBreakerScreen>() {
 	val gameViewport = FitViewport(9 * 30f, 16 * 30f)
 	val batch: Batch by lazy { SpriteBatch(BATCH_SIZE) }
 	val engine: Engine by lazy { PooledEngine().apply {
+		addSystem(PlayerInputSystem(gameViewport))
 		addSystem(RenderSystem(batch, gameViewport))
 	} }
 
