@@ -20,7 +20,7 @@ private const val BATCH_SIZE = 1000
 private val log = logger<BrickBreaker>()
 
 class BrickBreaker: KtxGame<BrickBreakerScreen>() {
-	val gameViewport = FitViewport(9 * 30f, 16 * 30f)
+	val gameViewport = FitViewport(180f, 320f)
 	val batch: Batch by lazy { SpriteBatch(BATCH_SIZE) }
 	val engine: Engine by lazy { PooledEngine().apply {
 		addSystem(PlayerInputSystem(gameViewport))

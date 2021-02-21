@@ -16,7 +16,7 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 		engine.entity {
 			with<TransformComponent> {
 				setSizeFromTexture(playerTexture)
-				rect.setCenter(gameViewport.worldWidth / 2f, 20f)
+				rect.setCenter(gameViewport.worldWidth / 2f, PaddleComponent.Y)
 			}
 			with<GraphicsComponent> {
 				sprite.run {

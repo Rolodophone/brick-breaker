@@ -8,6 +8,7 @@ import ktx.ashley.mapperFor
 class PaddleComponent: Component, Pool.Poolable {
 	companion object {
 		val mapper = mapperFor<PaddleComponent>()
+		const val Y = 20f
 	}
 
 	enum class State {
