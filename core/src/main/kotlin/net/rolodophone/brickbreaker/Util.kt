@@ -16,5 +16,8 @@ fun Viewport.unprojectY(y: Float): Float {
 	return unproject(tempVector).y
 }
 
+fun Viewport.halfWorldWidth() = worldWidth / 2f
+fun Viewport.halfWorldHeight() = worldHeight / 2f
+
 fun Rectangle.halfWidth() = width / 2
 fun Rectangle.halfHeight() = height / 2

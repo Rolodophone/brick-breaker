@@ -13,10 +13,12 @@ class TransformComponent: Component, Pool.Poolable, Comparable<TransformComponen
 
 	val rect = Rectangle()
 	var z = 0
+	var rotation = 0f
 
 	override fun reset() {
 		//Note the rect is not reset. If you don't define the rect when using this component behaviour is undefined
 		z = 0
+		rotation = 0f
 	}
 
 	override fun compareTo(other: TransformComponent): Int {

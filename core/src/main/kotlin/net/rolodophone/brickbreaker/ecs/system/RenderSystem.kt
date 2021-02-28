@@ -41,6 +41,7 @@ class RenderSystem(
 
 		graphics.sprite.run {
 			setBounds(transform.rect.x, transform.rect.y, transform.rect.width, transform.rect.height)
+			rotation = transform.rotation
 			draw(batch)
 		}
 	}
