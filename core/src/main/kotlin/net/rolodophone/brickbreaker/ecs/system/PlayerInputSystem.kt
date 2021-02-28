@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.Viewport
 import ktx.ashley.allOf
+import ktx.ashley.has
+import net.rolodophone.brickbreaker.ecs.component.FiringLineComponent
 import net.rolodophone.brickbreaker.ecs.component.PaddleComponent
 import net.rolodophone.brickbreaker.ecs.component.TransformComponent
 import net.rolodophone.brickbreaker.ecs.component.getNotNull
@@ -18,14 +20,28 @@ class PlayerInputSystem(
 	allOf(PaddleComponent::class, TransformComponent::class).get()
 ) {
 	override fun processEntity(entity: Entity, deltaTime: Float) {
-		//don't move paddle if it's firing
 		val paddle = entity.getNotNull(PaddleComponent.mapper)
-		if (paddle.state == PaddleComponent.State.FIRING) return
 
-		val transform = entity.getNotNull(TransformComponent.mapper)
+		val touchX = gameViewport.unprojectX(Gdx.input.x.toFloat())
 
-		val newX = gameViewport.unprojectX(Gdx.input.x.toFloat())
-		val clampedX = MathUtils.clamp(newX, transform.rect.halfWidth(), gameViewport.worldWidth - transform.rect.halfWidth())
-		transform.rect.setCenter(clampedX, PaddleComponent.Y)
+		when (paddle.state) {
+			PaddleComponent.State.FIRING -> {
+				// swipe to determine firing angle
+
+				val angle = MathUtils.lerp(60f, -60f, touchX / gameViewport.worldWidth)
+				val firingAngle = MathUtils.clamp(angle, -60f, 60f)
+				paddle.firingAngle = firingAngle
+				engine.entities.first { it.has(FiringLineComponent.mapper) }.getNotNull(TransformComponent.mapper).rotation = firingAngle
+			}
+
+			PaddleComponent.State.DEFLECTING -> {
+				// swipe to move paddle left and right
+
+				val transform = entity.getNotNull(TransformComponent.mapper)
+
+				val clampedX = MathUtils.clamp(touchX, transform.rect.halfWidth(), gameViewport.worldWidth - transform.rect.halfWidth())
+				transform.rect.setCenter(clampedX, PaddleComponent.Y)
+			}
+		}
 	}
 }

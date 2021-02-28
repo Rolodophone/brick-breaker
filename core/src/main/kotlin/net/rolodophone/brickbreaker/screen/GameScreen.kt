@@ -1,13 +1,13 @@
 package net.rolodophone.brickbreaker.screen
 
+import com.badlogic.gdx.math.Vector2
 import ktx.ashley.entity
 import ktx.ashley.with
 import net.rolodophone.brickbreaker.BrickBreaker
-import net.rolodophone.brickbreaker.ecs.component.BallComponent
-import net.rolodophone.brickbreaker.ecs.component.GraphicsComponent
-import net.rolodophone.brickbreaker.ecs.component.PaddleComponent
-import net.rolodophone.brickbreaker.ecs.component.TransformComponent
+import net.rolodophone.brickbreaker.ecs.component.*
 import net.rolodophone.brickbreaker.halfWorldWidth
+
+private val tempVector = Vector2()
 
 class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 	override fun show() {
@@ -23,12 +23,12 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			with<PaddleComponent>()
 		}
 		//ball
-		engine.entity {
+		val ball = engine.entity {
 			with<TransformComponent> {
 				setSizeFromTexture(textures.ball)
 				rect.setCenter(
 					gameViewport.halfWorldWidth(), 
-					PaddleComponent.Y + textures.paddle_normal.regionHeight / 2 + textures.ball.regionHeight / 2
+					PaddleComponent.Y + textures.paddle_normal.regionHeight / 2f + textures.ball.regionHeight / 2f
 				)
 			}
 			with<GraphicsComponent> {
@@ -39,8 +39,15 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 		//firing line
 		engine.entity {
 			with<TransformComponent> {
-
+				setSizeFromTexture(textures.firing_line)
+				rect.setPosition(ball.getNotNull(TransformComponent.mapper).rect.getCenter(tempVector))
+				rect.x -= textures.firing_line.regionWidth / 2f
 			}
+			with<GraphicsComponent> {
+				sprite.setRegion(textures.firing_line)
+				sprite.setOrigin(textures.firing_line.regionWidth / 2f, 0f)
+			}
+			with<FiringLineComponent>()
 		}
 	}
 
