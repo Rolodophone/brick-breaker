@@ -22,6 +22,8 @@ private val log = logger<BrickBreaker>()
 class BrickBreaker: KtxGame<BrickBreakerScreen>() {
 	val gameViewport = FitViewport(180f, 320f)
 	val batch: Batch by lazy { SpriteBatch(BATCH_SIZE) }
+	val brickBreakerTextures: BrickBreakerTextures by lazy { BrickBreakerTextures() }
+
 	val engine: Engine by lazy { PooledEngine().apply {
 		addSystem(PlayerInputSystem(gameViewport))
 		addSystem(RenderSystem(batch, gameViewport))
@@ -45,5 +47,7 @@ class BrickBreaker: KtxGame<BrickBreakerScreen>() {
 			"Max sprites in batch: ${sb.maxSpritesInBatch}; size of batch: $BATCH_SIZE"
 		}
 		batch.dispose()
+
+		brickBreakerTextures.dispose()
 	}
 }

@@ -1,0 +1,104 @@
+
+graphics.png
+size: 128, 128
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+ball
+  rotate: false
+  xy: 1, 1
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+brick_black
+  rotate: false
+  xy: 38, 57
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+brick_dark_blue
+  rotate: false
+  xy: 38, 75
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+brick_dark_green
+  rotate: false
+  xy: 4, 75
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+brick_light_blue
+  rotate: false
+  xy: 72, 57
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+brick_light_green
+  rotate: false
+  xy: 38, 39
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+brick_orange
+  rotate: false
+  xy: 4, 21
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+brick_pink
+  rotate: false
+  xy: 38, 21
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+brick_purple
+  rotate: false
+  xy: 72, 39
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+brick_red
+  rotate: false
+  xy: 4, 39
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+brick_white
+  rotate: false
+  xy: 4, 57
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+brick_yellow
+  rotate: false
+  xy: 72, 75
+  size: 32, 16
+  orig: 32, 16
+  offset: 0, 0
+  index: -1
+firing_line
+  rotate: false
+  xy: 1, 11
+  size: 1, 80
+  orig: 1, 80
+  offset: 0, 0
+  index: -1
+paddle_normal
+  rotate: false
+  xy: 4, 11
+  size: 36, 8
+  orig: 36, 8
+  offset: 0, 0
+  index: -1
