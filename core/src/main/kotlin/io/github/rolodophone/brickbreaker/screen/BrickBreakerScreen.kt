@@ -1,7 +1,7 @@
-package net.rolodophone.brickbreaker.screen
+package io.github.rolodophone.brickbreaker.screen
 
+import io.github.rolodophone.brickbreaker.BrickBreaker
 import ktx.app.KtxScreen
-import net.rolodophone.brickbreaker.BrickBreaker
 
 abstract class BrickBreakerScreen(val game: BrickBreaker): KtxScreen {
 	override fun resize(width: Int, height: Int) {

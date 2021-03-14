@@ -1,4 +1,4 @@
-package net.rolodophone.brickbreaker
+package io.github.rolodophone.brickbreaker
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.PooledEngine
@@ -7,13 +7,13 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FitViewport
+import io.github.rolodophone.brickbreaker.ecs.system.PlayerInputSystem
+import io.github.rolodophone.brickbreaker.ecs.system.RenderSystem
+import io.github.rolodophone.brickbreaker.screen.BrickBreakerScreen
+import io.github.rolodophone.brickbreaker.screen.GameScreen
 import ktx.app.KtxGame
 import ktx.log.debug
 import ktx.log.logger
-import net.rolodophone.brickbreaker.ecs.system.PlayerInputSystem
-import net.rolodophone.brickbreaker.ecs.system.RenderSystem
-import net.rolodophone.brickbreaker.screen.BrickBreakerScreen
-import net.rolodophone.brickbreaker.screen.GameScreen
 
 private const val BATCH_SIZE = 1000
 

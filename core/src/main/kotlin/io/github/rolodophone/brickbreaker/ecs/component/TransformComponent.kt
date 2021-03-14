@@ -1,4 +1,4 @@
-package net.rolodophone.brickbreaker.ecs.component
+package io.github.rolodophone.brickbreaker.ecs.component
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.g2d.TextureRegion

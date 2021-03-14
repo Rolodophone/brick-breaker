@@ -1,7 +1,7 @@
-package net.rolodophone.brickbreaker
+package io.github.rolodophone.brickbreaker
 
-import com.badlogic.gdx.backends.android.AndroidApplication
 import android.os.Bundle
+import com.badlogic.gdx.backends.android.AndroidApplication
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration
 
 /** Launches the Android application.  */

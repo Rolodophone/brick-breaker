@@ -1,4 +1,4 @@
-package net.rolodophone.brickbreaker
+package io.github.rolodophone.brickbreaker
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.TextureAtlas

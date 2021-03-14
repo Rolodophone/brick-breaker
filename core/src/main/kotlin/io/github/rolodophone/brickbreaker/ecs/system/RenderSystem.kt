@@ -1,17 +1,17 @@
-package net.rolodophone.brickbreaker.ecs.system
+package io.github.rolodophone.brickbreaker.ecs.system
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.viewport.Viewport
+import io.github.rolodophone.brickbreaker.ecs.component.GraphicsComponent
+import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
+import io.github.rolodophone.brickbreaker.ecs.component.getNotNull
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.graphics.use
 import ktx.log.error
 import ktx.log.logger
-import net.rolodophone.brickbreaker.ecs.component.GraphicsComponent
-import net.rolodophone.brickbreaker.ecs.component.TransformComponent
-import net.rolodophone.brickbreaker.ecs.component.getNotNull
 
 private val log = logger<RenderSystem>()
 

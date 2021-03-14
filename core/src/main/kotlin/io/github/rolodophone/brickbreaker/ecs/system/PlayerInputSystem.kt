@@ -1,18 +1,18 @@
-package net.rolodophone.brickbreaker.ecs.system
+package io.github.rolodophone.brickbreaker.ecs.system
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.Viewport
+import io.github.rolodophone.brickbreaker.ecs.component.FiringLineComponent
+import io.github.rolodophone.brickbreaker.ecs.component.PaddleComponent
+import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
+import io.github.rolodophone.brickbreaker.ecs.component.getNotNull
+import io.github.rolodophone.brickbreaker.halfWidth
+import io.github.rolodophone.brickbreaker.unprojectX
 import ktx.ashley.allOf
 import ktx.ashley.has
-import net.rolodophone.brickbreaker.ecs.component.FiringLineComponent
-import net.rolodophone.brickbreaker.ecs.component.PaddleComponent
-import net.rolodophone.brickbreaker.ecs.component.TransformComponent
-import net.rolodophone.brickbreaker.ecs.component.getNotNull
-import net.rolodophone.brickbreaker.halfWidth
-import net.rolodophone.brickbreaker.unprojectX
 
 class PlayerInputSystem(
 	private val gameViewport: Viewport

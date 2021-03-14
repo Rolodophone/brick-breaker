@@ -1,11 +1,11 @@
-package net.rolodophone.brickbreaker.screen
+package io.github.rolodophone.brickbreaker.screen
 
 import com.badlogic.gdx.math.Vector2
+import io.github.rolodophone.brickbreaker.BrickBreaker
+import io.github.rolodophone.brickbreaker.ecs.component.*
+import io.github.rolodophone.brickbreaker.halfWorldWidth
 import ktx.ashley.entity
 import ktx.ashley.with
-import net.rolodophone.brickbreaker.BrickBreaker
-import net.rolodophone.brickbreaker.ecs.component.*
-import net.rolodophone.brickbreaker.halfWorldWidth
 
 private val tempVector = Vector2()
 

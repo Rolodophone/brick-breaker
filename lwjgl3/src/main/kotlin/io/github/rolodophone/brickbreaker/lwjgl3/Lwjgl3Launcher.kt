@@ -1,8 +1,8 @@
-package net.rolodophone.brickbreaker.lwjgl3
+package io.github.rolodophone.brickbreaker.lwjgl3
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration
-import net.rolodophone.brickbreaker.BrickBreaker
+import io.github.rolodophone.brickbreaker.BrickBreaker
 
 /** Launches the desktop (LWJGL3) application.  */
 fun main() {
