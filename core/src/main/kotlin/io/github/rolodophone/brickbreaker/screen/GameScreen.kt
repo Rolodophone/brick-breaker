@@ -9,6 +9,8 @@ import ktx.ashley.with
 
 private val tempVector = Vector2()
 
+private const val MAX_DELTA_TIME = 1/10f
+
 class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 	override fun show() {
 		//paddle
@@ -52,6 +54,7 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 	}
 
 	override fun render(delta: Float) {
-		engine.update(delta)
+		val newDeltaTime = if (delta > MAX_DELTA_TIME) MAX_DELTA_TIME else delta
+		engine.update(newDeltaTime)
 	}
 }
