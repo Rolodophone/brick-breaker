@@ -1,4 +1,4 @@
-package io.github.rolodophone.brickbreaker
+package io.github.rolodophone.brickbreaker.util
 
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
@@ -21,3 +21,8 @@ fun Viewport.halfWorldHeight() = worldHeight / 2f
 
 fun Rectangle.halfWidth() = width / 2
 fun Rectangle.halfHeight() = height / 2
+
+operator fun Vector2.plus(vec: Vector2): Vector2 = this.add(vec)
+
+operator fun Vector2.times(scalar: Float): Vector2 = this.scl(scalar)
+operator fun Float.times(vec: Vector2) = vec * this

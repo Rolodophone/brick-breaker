@@ -9,8 +9,8 @@ import io.github.rolodophone.brickbreaker.ecs.component.FiringLineComponent
 import io.github.rolodophone.brickbreaker.ecs.component.PaddleComponent
 import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
 import io.github.rolodophone.brickbreaker.ecs.component.getNotNull
-import io.github.rolodophone.brickbreaker.halfWidth
-import io.github.rolodophone.brickbreaker.unprojectX
+import io.github.rolodophone.brickbreaker.util.halfWidth
+import io.github.rolodophone.brickbreaker.util.unprojectX
 import ktx.ashley.allOf
 import ktx.ashley.has
 
