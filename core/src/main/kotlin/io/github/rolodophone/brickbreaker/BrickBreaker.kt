@@ -27,6 +27,7 @@ class BrickBreaker: KtxGame<BrickBreakerScreen>() {
 
 	val engine: Engine by lazy { PooledEngine().apply {
 		addSystem(PlayerInputSystem(gameViewport))
+//		addSystem(DebugSystem())
 		addSystem(MoveSystem())
 		addSystem(RenderSystem(batch, gameViewport))
 	} }
