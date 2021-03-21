@@ -5,7 +5,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
 import io.github.rolodophone.brickbreaker.ecs.component.MoveComponent
 import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
-import io.github.rolodophone.brickbreaker.ecs.component.getNotNull
+import io.github.rolodophone.brickbreaker.util.getNotNull
 import io.github.rolodophone.brickbreaker.util.plus
 import ktx.ashley.allOf
 

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.brickbreaker.ecs.component.GraphicsComponent
 import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
-import io.github.rolodophone.brickbreaker.ecs.component.getNotNull
+import io.github.rolodophone.brickbreaker.util.getNotNull
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.graphics.use

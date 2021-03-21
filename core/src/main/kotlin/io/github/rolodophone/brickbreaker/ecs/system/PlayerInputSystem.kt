@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.brickbreaker.ecs.component.FiringLineComponent
 import io.github.rolodophone.brickbreaker.ecs.component.PaddleComponent
 import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
-import io.github.rolodophone.brickbreaker.ecs.component.getNotNull
+import io.github.rolodophone.brickbreaker.util.getNotNull
 import io.github.rolodophone.brickbreaker.util.halfWidth
 import io.github.rolodophone.brickbreaker.util.unprojectX
 import ktx.ashley.allOf
