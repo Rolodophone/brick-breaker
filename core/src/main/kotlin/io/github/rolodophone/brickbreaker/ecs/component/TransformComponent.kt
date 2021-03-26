@@ -12,6 +12,7 @@ class TransformComponent: Component, Pool.Poolable, Comparable<TransformComponen
 	}
 
 	val rect = Rectangle()
+
 	var z = 0
 	var rotation = 0f
 

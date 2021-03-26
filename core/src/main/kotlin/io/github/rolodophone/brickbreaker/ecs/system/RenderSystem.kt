@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.brickbreaker.ecs.component.GraphicsComponent
 import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
 import io.github.rolodophone.brickbreaker.util.getNotNull
+import io.github.rolodophone.brickbreaker.util.setBounds
 import ktx.ashley.allOf
 import ktx.ashley.get
 import ktx.graphics.use
@@ -39,8 +40,8 @@ class RenderSystem(
 		}
 
 		graphics.sprite.run {
-			setBounds(transform.rect.x, transform.rect.y, transform.rect.width, transform.rect.height)
 			rotation = transform.rotation
+			setBounds(transform.rect)
 			draw(batch)
 		}
 	}

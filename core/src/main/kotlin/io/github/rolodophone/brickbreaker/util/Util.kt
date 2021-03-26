@@ -3,6 +3,7 @@ package io.github.rolodophone.brickbreaker.util
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
+import com.badlogic.gdx.graphics.g2d.Sprite
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
@@ -36,3 +37,5 @@ fun <T : Component> Entity.getNotNull(mapper: ComponentMapper<T>): T {
 	requireNotNull(component) { "Entity $this hasn't got the requested component" }
 	return component
 }
+
+fun Sprite.setBounds(rect: Rectangle) = setBounds(rect.x, rect.y, rect.width, rect.height)

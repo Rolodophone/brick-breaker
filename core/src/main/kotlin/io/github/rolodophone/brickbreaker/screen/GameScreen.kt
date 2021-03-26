@@ -14,6 +14,7 @@ private const val MAX_DELTA_TIME = 1/10f
 
 class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 	override fun show() {
+
 		//paddle
 		engine.entity {
 			with<TransformComponent> {
@@ -25,6 +26,7 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			}
 			with<PaddleComponent>()
 		}
+
 		//ball
 		val ball = engine.entity {
 			with<TransformComponent> {
@@ -39,6 +41,7 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			}
 			with<BallComponent>()
 		}
+
 		//firing line
 		engine.entity {
 			with<TransformComponent> {
