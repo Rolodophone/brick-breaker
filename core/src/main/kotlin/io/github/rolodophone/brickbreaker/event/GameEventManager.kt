@@ -6,12 +6,23 @@ class GameEventManager {
 	private val listeners = ObjectMap<GameEvent, MutableSet<GameEventListener>>()
 
 	fun listen(event: GameEvent, listener: GameEventListener) {
-		listeners[event].add(listener)
+		val listenerSet = listeners[event]
+
+		if (listenerSet == null) {
+			listeners.put(event, mutableSetOf(listener))
+		}
+		else {
+			listenerSet.add(listener)
+		}
 	}
 
 	fun trigger(event: GameEvent) {
-		for (listener in listeners[event]) {
-			listener(event)
+		val listenerSet = listeners[event]
+
+		if (listenerSet != null) {
+			for (listener in listeners[event]) {
+				listener.invoke(event)
+			}
 		}
 	}
 }

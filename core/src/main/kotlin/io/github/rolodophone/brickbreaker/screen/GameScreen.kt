@@ -2,7 +2,10 @@ package io.github.rolodophone.brickbreaker.screen
 
 import com.badlogic.gdx.math.Vector2
 import io.github.rolodophone.brickbreaker.BrickBreaker
-import io.github.rolodophone.brickbreaker.ecs.component.*
+import io.github.rolodophone.brickbreaker.ecs.component.FiringLineComponent
+import io.github.rolodophone.brickbreaker.ecs.component.GraphicsComponent
+import io.github.rolodophone.brickbreaker.ecs.component.PaddleComponent
+import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
 import io.github.rolodophone.brickbreaker.util.getNotNull
 import io.github.rolodophone.brickbreaker.util.halfWorldWidth
 import ktx.ashley.entity
@@ -39,7 +42,6 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			with<GraphicsComponent> {
 				sprite.setRegion(textures.ball)
 			}
-			with<BallComponent>()
 		}
 
 		//firing line

@@ -12,14 +12,14 @@ class PaddleComponent: Component, Pool.Poolable {
 	}
 
 	enum class State {
-		FIRING, DEFLECTING
+		WAITING_TO_FIRE, AIMING, DEFLECTING
 	}
 
-	var state = State.FIRING
+	var state = State.WAITING_TO_FIRE
 	var firingAngle = MathUtils.random(20f, 160f)
 
 	override fun reset() {
-		state = State.FIRING
+		state = State.WAITING_TO_FIRE
 		firingAngle = MathUtils.random(20f, 160f)
 	}
 }
