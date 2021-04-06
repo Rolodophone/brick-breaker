@@ -39,6 +39,8 @@ class RenderSystem(
 			return
 		}
 
+		if (!graphics.visible) return
+
 		graphics.sprite.run {
 			rotation = transform.rotation
 			setBounds(transform.rect)
