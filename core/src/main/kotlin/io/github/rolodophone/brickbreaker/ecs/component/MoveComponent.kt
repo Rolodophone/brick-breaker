@@ -1,7 +1,6 @@
 package io.github.rolodophone.brickbreaker.ecs.component
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import ktx.ashley.mapperFor
@@ -11,13 +10,31 @@ class MoveComponent: Component, Pool.Poolable {
 		val mapper = mapperFor<MoveComponent>()
 	}
 
+	/**
+	 * The current velocity vector of the entity, in viewport units per second
+	 */
 	val velocity = Vector2()
-	val beforeRect = Rectangle()
-	val afterRect = Rectangle()
+
+	/**
+	 * The previous position of [TransformComponent.rect].
+	 *
+	 * This is used to interpolate between frames.
+	 */
+	val prevPosition = Vector2()
+
+	/**
+	 * The interpolated position of the entity.
+	 *
+	 * This will be somewhere between [MoveComponent.prevPosition] and [TransformComponent.rect].position.
+	 *
+	 * The [RenderSystem][io.github.rolodophone.brickbreaker.ecs.system.RenderSystem] will use this as the position of the sprite if the
+	 * entity has a [MoveComponent]. Otherwise it will use [TransformComponent.rect]
+	 */
+	val interpolatedPosition = Vector2()
 
 	override fun reset() {
 		velocity.setZero()
-		beforeRect.set(0f, 0f, 0f, 0f)
-		afterRect.set(0f, 0f, 0f, 0f)
+		prevPosition.setZero()
+		interpolatedPosition.setZero()
 	}
 }

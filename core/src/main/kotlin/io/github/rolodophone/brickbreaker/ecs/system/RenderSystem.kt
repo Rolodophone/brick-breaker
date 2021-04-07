@@ -3,8 +3,10 @@ package io.github.rolodophone.brickbreaker.ecs.system
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.brickbreaker.ecs.component.GraphicsComponent
+import io.github.rolodophone.brickbreaker.ecs.component.MoveComponent
 import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
 import io.github.rolodophone.brickbreaker.util.getNotNull
 import io.github.rolodophone.brickbreaker.util.setBounds
@@ -23,6 +25,8 @@ class RenderSystem(
 	allOf(TransformComponent::class, GraphicsComponent::class).get(),
 	compareBy { entity -> entity[TransformComponent.mapper] }
 ) {
+	val tempVector = Vector2()
+
 	override fun update(deltaTime: Float) {
 		gameViewport.apply()
 		batch.use(gameViewport.camera.combined) {
@@ -31,20 +35,31 @@ class RenderSystem(
 	}
 
 	override fun processEntity(entity: Entity, deltaTime: Float) {
-		val transform = entity.getNotNull(TransformComponent.mapper)
-		val graphics = entity.getNotNull(GraphicsComponent.mapper)
+		val transformComp = entity.getNotNull(TransformComponent.mapper)
+		val graphicsComp = entity.getNotNull(GraphicsComponent.mapper)
 
-		if (graphics.sprite.texture == null) {
+		if (graphicsComp.sprite.texture == null) {
 			log.error { "Entity $entity has no texture for rendering" }
 			return
 		}
 
-		if (!graphics.visible) return
+		if (!graphicsComp.visible) return
 
-		graphics.sprite.run {
-			rotation = transform.rotation
-			setBounds(transform.rect)
-			draw(batch)
+		// use interpolated position if entity has MoveComponent; otherwise use TransformComponent.rect
+		val moveComp = entity[MoveComponent.mapper]
+		if (moveComp == null) {
+			graphicsComp.sprite.setBounds(transformComp.rect)
 		}
+		else {
+			graphicsComp.sprite.setBounds(
+				moveComp.interpolatedPosition.x,
+				moveComp.interpolatedPosition.y,
+				transformComp.rect.width,
+				transformComp.rect.height
+			)
+		}
+
+		graphicsComp.sprite.rotation = transformComp.rotation
+		graphicsComp.sprite.draw(batch)
 	}
 }

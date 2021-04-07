@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2
 import io.github.rolodophone.brickbreaker.ecs.component.MoveComponent
 import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
 import io.github.rolodophone.brickbreaker.util.getNotNull
-import io.github.rolodophone.brickbreaker.util.plus
 import ktx.ashley.allOf
 
 private const val DELTA_TIME = 1/25f
@@ -33,22 +32,22 @@ class MoveSystem: IteratingSystem(allOf(TransformComponent::class, MoveComponent
 			val transformComp = entity.getNotNull(TransformComponent.mapper)
 			val moveComp = entity.getNotNull(MoveComponent.mapper)
 
-			transformComp.rect.set(
-				MathUtils.lerp(moveComp.beforeRect.x, moveComp.afterRect.x, alpha),
-				MathUtils.lerp(moveComp.beforeRect.y, moveComp.afterRect.y, alpha),
-				transformComp.rect.width,
-				transformComp.rect.height
+			moveComp.interpolatedPosition.set(
+				MathUtils.lerp(moveComp.prevPosition.x, transformComp.rect.x, alpha),
+				MathUtils.lerp(moveComp.prevPosition.y, transformComp.rect.y, alpha)
 			)
 		}
 	}
 
 	override fun processEntity(entity: Entity, deltaTime: Float) {
-		val moveComp = entity.getNotNull((MoveComponent.mapper))
+		val moveComp = entity.getNotNull(MoveComponent.mapper)
+		val transformComp = entity.getNotNull(TransformComponent.mapper)
 
 		//save previous position
-		moveComp.beforeRect.set(moveComp.afterRect)
+		moveComp.prevPosition.set(transformComp.rect.x, transformComp.rect.y)
 
-		val currentPosition = moveComp.afterRect.getPosition(tempVector)
-		moveComp.afterRect.setPosition(currentPosition + moveComp.velocity)
+		//move position according to velocity
+		transformComp.rect.x += moveComp.velocity.x
+		transformComp.rect.y += moveComp.velocity.y
 	}
 }
