@@ -5,16 +5,15 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
-import io.github.rolodophone.brickbreaker.ecs.component.*
+import io.github.rolodophone.brickbreaker.ecs.component.PaddleComponent
+import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
 import io.github.rolodophone.brickbreaker.event.GameEvent
 import io.github.rolodophone.brickbreaker.event.GameEventManager
 import io.github.rolodophone.brickbreaker.util.getNotNull
 import io.github.rolodophone.brickbreaker.util.halfWidth
 import io.github.rolodophone.brickbreaker.util.unprojectX
 import ktx.ashley.allOf
-import ktx.ashley.has
 
 class PlayerInputSystem(
 	private val gameViewport: Viewport,
@@ -22,22 +21,15 @@ class PlayerInputSystem(
 ): IteratingSystem(
 	allOf(PaddleComponent::class, TransformComponent::class).get()
 ) {
-	private val tempVector = Vector2()
-
 	override fun processEntity(entity: Entity, deltaTime: Float) {
 		val paddleComp = entity.getNotNull(PaddleComponent.mapper)
-
 
 		when (paddleComp.state) {
 			PaddleComponent.State.WAITING_TO_FIRE -> {
 				// wait for the user to hold the mouse down to aim
 
 				if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-					paddleComp.state = PaddleComponent.State.AIMING
-
-					//show firing line
-					val firingLine = engine.entities.first { it.has(FiringLineComponent.mapper) }
-					firingLine.getNotNull(GraphicsComponent.mapper).visible = true
+					gameEventManager.trigger(GameEvent.StartAiming)
 				}
 			}
 
@@ -47,21 +39,13 @@ class PlayerInputSystem(
 				val touchX = gameViewport.unprojectX(Gdx.input.x.toFloat())
 				val angle = MathUtils.lerp(60f, -60f, touchX / gameViewport.worldWidth)
 				val firingAngle = MathUtils.clamp(angle, -60f, 60f)
-				paddleComp.firingAngle = firingAngle
 
-				val firingLine = engine.entities.first { it.has(FiringLineComponent.mapper) }
-				firingLine.getNotNull(TransformComponent.mapper).rotation = firingAngle
+				GameEvent.AdjustAimAngle.newAngle = firingAngle
+				gameEventManager.trigger(GameEvent.AdjustAimAngle)
 
 				if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
 					// button released, so fire ball
-
-					firingLine.getNotNull(GraphicsComponent.mapper).visible = false
 					gameEventManager.trigger(GameEvent.ShootBall)
-					paddleComp.state = PaddleComponent.State.DEFLECTING
-
-					val ballMoveComp = engine.entities.first { it.has(BallComponent.mapper) }.getNotNull(MoveComponent.mapper)
-//					val ballVelocity = MathUtils.
-					ballMoveComp.velocity.set(5f, 10f)
 				}
 			}
 

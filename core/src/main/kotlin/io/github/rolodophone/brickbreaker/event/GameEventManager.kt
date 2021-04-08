@@ -3,25 +3,31 @@ package io.github.rolodophone.brickbreaker.event
 import com.badlogic.gdx.utils.ObjectMap
 
 class GameEventManager {
-	private val listeners = ObjectMap<GameEvent, MutableSet<GameEventListener>>()
+	private val callbacks = ObjectMap<GameEvent, MutableSet<(GameEvent) -> Unit>>()
 
-	fun listen(event: GameEvent, listener: GameEventListener) {
-		val listenerSet = listeners[event]
+	fun <E: GameEvent> listen(event: E, callback: (event: E) -> Unit) {
+		val callbackSet = callbacks[event]
 
-		if (listenerSet == null) {
-			listeners.put(event, mutableSetOf(listener))
+		//casting so all values are the same type
+		@Suppress("UNCHECKED_CAST")
+		val castedCallback = callback as (GameEvent) -> Unit
+
+		if (callbackSet == null) {
+			// no callbacks present that take that GameEvent so add a new set
+			callbacks.put(event, mutableSetOf(castedCallback))
 		}
 		else {
-			listenerSet.add(listener)
+			// add to the existing set of callbacks that take that GameEvent
+			callbackSet.add(castedCallback)
 		}
 	}
 
 	fun trigger(event: GameEvent) {
-		val listenerSet = listeners[event]
+		val listenerSet = callbacks[event]
 
 		if (listenerSet != null) {
-			for (listener in listeners[event]) {
-				listener.invoke(event)
+			for (callback in callbacks[event]) {
+				callback.invoke(event)
 			}
 		}
 	}
