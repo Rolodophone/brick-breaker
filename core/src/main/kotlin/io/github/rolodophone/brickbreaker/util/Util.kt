@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package io.github.rolodophone.brickbreaker.util
 
 import com.badlogic.ashley.core.Component
