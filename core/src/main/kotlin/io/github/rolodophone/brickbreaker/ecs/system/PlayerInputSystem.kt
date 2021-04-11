@@ -15,6 +15,9 @@ import io.github.rolodophone.brickbreaker.util.halfWidth
 import io.github.rolodophone.brickbreaker.util.unprojectX
 import ktx.ashley.allOf
 
+/**
+ * Handles player input and triggers the appropriate [GameEvent]s.
+ */
 class PlayerInputSystem(
 	private val gameViewport: Viewport,
 	private val gameEventManager: GameEventManager

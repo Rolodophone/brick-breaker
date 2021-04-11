@@ -7,6 +7,9 @@ import io.github.rolodophone.brickbreaker.event.GameEventManager
 import io.github.rolodophone.brickbreaker.util.getNotNull
 import ktx.ashley.has
 
+/**
+ * Responsible for controlling the logic of aiming and firing the ball
+ */
 class AimAndFireSystem(gameEventManager: GameEventManager): EntitySystem() {
 	private val paddle by lazy { engine.entities.first { it.has(PaddleComponent.mapper) } }
 	private val ball by lazy { engine.entities.first { it.has(BallComponent.mapper) } }

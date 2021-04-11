@@ -3,7 +3,6 @@ package io.github.rolodophone.brickbreaker.ecs.system
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.SortedIteratingSystem
 import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.brickbreaker.ecs.component.GraphicsComponent
 import io.github.rolodophone.brickbreaker.ecs.component.MoveComponent
@@ -18,6 +17,9 @@ import ktx.log.logger
 
 private val log = logger<RenderSystem>()
 
+/**
+ * Renders the entities on the screen
+ */
 class RenderSystem(
 	private val batch: Batch,
 	private val gameViewport: Viewport
@@ -25,8 +27,6 @@ class RenderSystem(
 	allOf(TransformComponent::class, GraphicsComponent::class).get(),
 	compareBy { entity -> entity[TransformComponent.mapper] }
 ) {
-	val tempVector = Vector2()
-
 	override fun update(deltaTime: Float) {
 		gameViewport.apply()
 		batch.use(gameViewport.camera.combined) {
