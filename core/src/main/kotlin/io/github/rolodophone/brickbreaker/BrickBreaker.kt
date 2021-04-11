@@ -7,10 +7,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FitViewport
-import io.github.rolodophone.brickbreaker.ecs.system.AimAndFireSystem
-import io.github.rolodophone.brickbreaker.ecs.system.MoveSystem
-import io.github.rolodophone.brickbreaker.ecs.system.PlayerInputSystem
-import io.github.rolodophone.brickbreaker.ecs.system.RenderSystem
+import io.github.rolodophone.brickbreaker.ecs.system.*
 import io.github.rolodophone.brickbreaker.event.GameEventManager
 import io.github.rolodophone.brickbreaker.screen.BrickBreakerScreen
 import io.github.rolodophone.brickbreaker.screen.GameScreen
@@ -31,9 +28,10 @@ class BrickBreaker: KtxGame<BrickBreakerScreen>() {
 
 	val engine: Engine by lazy { PooledEngine().apply {
 		addSystem(PlayerInputSystem(gameViewport, gameEventManager))
-//		addSystem(DebugSystem())
+		addSystem(DebugSystem())
 		addSystem(AimAndFireSystem(gameEventManager))
 		addSystem(MoveSystem())
+		addSystem(BallBounceSystem(gameViewport))
 		addSystem(RenderSystem(batch, gameViewport))
 	} }
 
