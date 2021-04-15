@@ -1,11 +1,14 @@
 package io.github.rolodophone.brickbreaker.ecs.system
 
 import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.gdx.math.MathUtils
 import io.github.rolodophone.brickbreaker.ecs.component.*
 import io.github.rolodophone.brickbreaker.event.GameEvent
 import io.github.rolodophone.brickbreaker.event.GameEventManager
 import io.github.rolodophone.brickbreaker.util.getNotNull
 import ktx.ashley.has
+
+private const val BALL_SPEED = 10f
 
 /**
  * Responsible for controlling the logic of aiming and firing the ball
@@ -35,8 +38,13 @@ class AimAndFireSystem(gameEventManager: GameEventManager): EntitySystem() {
 			paddleComp.state = PaddleComponent.State.DEFLECTING
 			firingLineGraphicsComp.visible = false
 
-//			val ballVelocity = MathUtils.
-			ballMoveComp.velocity.set(5f, 10f)
+			// subtracting from 90 converts the angle into anticlockwise from horizontal so we can use sin and cos
+			val firingAngle = 90 + firingLineTransformComp.rotation
+
+			ballMoveComp.velocity.set(
+				MathUtils.cosDeg(firingAngle) * BALL_SPEED,
+				MathUtils.sinDeg(firingAngle) * BALL_SPEED
+			)
 		}
 	}
 }
