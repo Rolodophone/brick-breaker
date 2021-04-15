@@ -14,6 +14,8 @@ private val tempVector = Vector2()
 
 private const val MAX_DELTA_TIME = 1/10f
 
+private const val WALL_WIDTH = 3f
+
 class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 	private val gameEventManager = GameEventManager()
 
@@ -75,11 +77,11 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 
 		//add systems to engine
 		engine.run {
-			addSystem(PlayerInputSystem(gameViewport, gameEventManager))
+			addSystem(PlayerInputSystem(gameViewport, gameEventManager, WALL_WIDTH))
 			addSystem(DebugSystem())
 			addSystem(AimAndFireSystem(gameEventManager, paddle, ball, firingLine))
 			addSystem(MoveSystem())
-			addSystem(BallBounceSystem(gameViewport, paddle))
+			addSystem(BallBounceSystem(gameViewport, paddle, WALL_WIDTH))
 			addSystem(RenderSystem(batch, gameViewport))
 		}
 	}

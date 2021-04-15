@@ -20,7 +20,8 @@ import ktx.ashley.allOf
  */
 class PlayerInputSystem(
 	private val gameViewport: Viewport,
-	private val gameEventManager: GameEventManager
+	private val gameEventManager: GameEventManager,
+	private val wallWidth: Float
 ): IteratingSystem(
 	allOf(PaddleComponent::class, TransformComponent::class).get()
 ) {
@@ -58,7 +59,11 @@ class PlayerInputSystem(
 				val transform = entity.getNotNull(TransformComponent.mapper)
 
 				val touchX = gameViewport.unprojectX(Gdx.input.x.toFloat())
-				val clampedX = MathUtils.clamp(touchX, transform.rect.halfWidth(), gameViewport.worldWidth - transform.rect.halfWidth())
+				val clampedX = MathUtils.clamp(
+					touchX,
+					transform.rect.halfWidth() + wallWidth,
+					gameViewport.worldWidth - transform.rect.halfWidth() - wallWidth
+				)
 				transform.rect.setCenter(clampedX, PaddleComponent.Y)
 			}
 		}

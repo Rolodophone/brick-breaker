@@ -13,7 +13,7 @@ import kotlin.math.absoluteValue
 /**
  * Makes the ball bounce off the walls and paddle
  */
-class BallBounceSystem(private val gameViewport: Viewport, private val paddle: Entity):
+class BallBounceSystem(private val gameViewport: Viewport, private val paddle: Entity, private val wallWidth: Float):
 	IteratingSystem(allOf(BallComponent::class, TransformComponent::class, MoveComponent::class).get()) {
 
 	override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -33,17 +33,17 @@ class BallBounceSystem(private val gameViewport: Viewport, private val paddle: E
 		val paddleRight = paddleTransformComp.rect.x + paddleTransformComp.rect.width
 
 		// bounce off left wall
-		if (ballLeft < 0f) {
+		if (ballLeft < wallWidth) {
 			ballMoveComp.velocity.x = ballMoveComp.velocity.x.absoluteValue
 		}
 
 		//bounce off right wall
-		else if (ballRight > gameViewport.worldWidth) {
+		else if (ballRight > gameViewport.worldWidth - wallWidth) {
 			ballMoveComp.velocity.x = -ballMoveComp.velocity.x.absoluteValue
 		}
 
 		//bounce off top wall
-		if (ballTop > gameViewport.worldHeight) {
+		if (ballTop > gameViewport.worldHeight - wallWidth) {
 			ballMoveComp.velocity.y = -ballMoveComp.velocity.y.absoluteValue
 		}
 
