@@ -2,13 +2,15 @@ package io.github.rolodophone.brickbreaker.ecs.system
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.viewport.Viewport
-import io.github.rolodophone.brickbreaker.ecs.component.BallComponent
-import io.github.rolodophone.brickbreaker.ecs.component.MoveComponent
-import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
+import io.github.rolodophone.brickbreaker.ecs.component.*
 import io.github.rolodophone.brickbreaker.util.getNotNull
 import ktx.ashley.allOf
 import kotlin.math.absoluteValue
+
+private const val ANGULAR_DECELERATION = 100f
+private const val MAX_ANGULAR_VELOCITY = 100f
 
 /**
  * Makes the ball bounce off the walls and paddle
@@ -19,6 +21,7 @@ class BallBounceSystem(private val gameViewport: Viewport, private val paddle: E
 	override fun processEntity(entity: Entity, deltaTime: Float) {
 		val ballMoveComp = entity.getNotNull(MoveComponent.mapper)
 		val ballTransformComp = entity.getNotNull(TransformComponent.mapper)
+		val ballSpinComp = entity.getNotNull(SpinComponent.mapper)
 
 		val ballLeft = ballTransformComp.rect.x
 		val ballBottom = ballTransformComp.rect.y
@@ -26,6 +29,7 @@ class BallBounceSystem(private val gameViewport: Viewport, private val paddle: E
 		val ballTop = ballTransformComp.rect.y + ballTransformComp.rect.height
 
 		val paddleTransformComp = paddle.getNotNull(TransformComponent.mapper)
+		val paddlePaddleComp = paddle.getNotNull(PaddleComponent.mapper)
 
 		val paddleTop = paddleTransformComp.rect.y + paddleTransformComp.rect.height
 		val paddleBottom = paddleTransformComp.rect.y
@@ -54,6 +58,27 @@ class BallBounceSystem(private val gameViewport: Viewport, private val paddle: E
 			ballLeft < paddleRight
 		) {
 			ballMoveComp.velocity.y = ballMoveComp.velocity.y.absoluteValue
+
+			//spin the ball depending on paddle's velocity
+			ballSpinComp.angularVelocity += paddlePaddleComp.velocity
+
+			//avoid spinning too much
+			ballSpinComp.angularVelocity = MathUtils.clamp(
+				ballSpinComp.angularVelocity,
+				-MAX_ANGULAR_VELOCITY,
+				MAX_ANGULAR_VELOCITY
+			)
+
+			//set angular deceleration so the spin goes away after a bit
+			if (ballSpinComp.angularVelocity > 0) {
+				ballSpinComp.angularAcceleration = -ANGULAR_DECELERATION
+			}
+			else {
+				ballSpinComp.angularAcceleration = ANGULAR_DECELERATION
+			}
+
+			//boring spin
+//			ballMoveComp.velocity.x -= paddlePaddleComp.velocity
 		}
 	}
 }

@@ -57,6 +57,7 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			with<GraphicsComponent> {
 				sprite.setRegion(textures.ball)
 			}
+			with<SpinComponent>()
 			with<MoveComponent>()
 			with<BallComponent>()
 		}
@@ -78,9 +79,10 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 		//add systems to engine
 		engine.run {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager, WALL_WIDTH))
-			addSystem(DebugSystem())
+			addSystem(DebugSystem(gameEventManager, paddle, ball))
 			addSystem(AimAndFireSystem(gameEventManager, paddle, ball, firingLine))
 			addSystem(MoveSystem())
+			addSystem(SpinSystem())
 			addSystem(BallBounceSystem(gameViewport, paddle, WALL_WIDTH))
 			addSystem(RenderSystem(batch, gameViewport))
 		}

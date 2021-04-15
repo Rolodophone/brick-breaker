@@ -64,6 +64,10 @@ class PlayerInputSystem(
 					transform.rect.halfWidth() + wallWidth,
 					gameViewport.worldWidth - transform.rect.halfWidth() - wallWidth
 				)
+
+				val prevPosition = transform.rect.x + transform.rect.width/2
+				paddleComp.velocity = (clampedX - prevPosition) / deltaTime
+
 				transform.rect.setCenter(clampedX, PaddleComponent.Y)
 			}
 		}

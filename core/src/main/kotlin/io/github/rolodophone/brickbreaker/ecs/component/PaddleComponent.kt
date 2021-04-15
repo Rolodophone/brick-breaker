@@ -17,9 +17,11 @@ class PaddleComponent: Component, Pool.Poolable {
 
 	var state = State.WAITING_TO_FIRE
 	var firingAngle = MathUtils.random(20f, 160f)
+	var velocity = 0f
 
 	override fun reset() {
 		state = State.WAITING_TO_FIRE
 		firingAngle = MathUtils.random(20f, 160f)
+		velocity = 0f
 	}
 }

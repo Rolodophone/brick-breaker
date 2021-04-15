@@ -1,18 +1,20 @@
 package io.github.rolodophone.brickbreaker.ecs.system
 
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.systems.IntervalIteratingSystem
-import io.github.rolodophone.brickbreaker.ecs.component.PaddleComponent
-import ktx.ashley.allOf
-
-private const val DELTA_TIME = 1/4f
+import com.badlogic.ashley.core.EntitySystem
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
+import io.github.rolodophone.brickbreaker.event.GameEvent
+import io.github.rolodophone.brickbreaker.event.GameEventManager
 
 /**
  * Controls debugging features. This System will probably be disabled in the release.
  */
 @Suppress("unused")
-class DebugSystem: IntervalIteratingSystem(allOf(PaddleComponent::class).get(), DELTA_TIME) {
-	override fun processEntity(entity: Entity) {
-
+class DebugSystem(private val gameEventManager: GameEventManager, private val paddle: Entity, private val ball: Entity): EntitySystem() {
+	override fun update(deltaTime: Float) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.NUMPAD_1)) {
+			gameEventManager.trigger(GameEvent.CatchBall)
+		}
 	}
 }

@@ -6,4 +6,5 @@ sealed class GameEvent {
 	object AdjustAimAngle: GameEvent() {
 		var newAngle = 0f
 	}
+	object CatchBall: GameEvent()
 }
