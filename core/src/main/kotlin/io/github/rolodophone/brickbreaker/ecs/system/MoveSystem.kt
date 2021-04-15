@@ -8,7 +8,7 @@ import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
 import io.github.rolodophone.brickbreaker.util.getNotNull
 import ktx.ashley.allOf
 
-private const val DELTA_TIME = 1/25f
+private const val DELTA_TIME = 1/60f
 
 /**
  * Controls smooth movement of entities.
@@ -47,7 +47,7 @@ class MoveSystem: IteratingSystem(allOf(TransformComponent::class, MoveComponent
 		moveComp.prevPosition.set(transformComp.rect.x, transformComp.rect.y)
 
 		//move position according to velocity
-		transformComp.rect.x += moveComp.velocity.x
-		transformComp.rect.y += moveComp.velocity.y
+		transformComp.rect.x += moveComp.velocity.x * deltaTime
+		transformComp.rect.y += moveComp.velocity.y * deltaTime
 	}
 }

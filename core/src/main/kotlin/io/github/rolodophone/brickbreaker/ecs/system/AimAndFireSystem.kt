@@ -8,7 +8,7 @@ import io.github.rolodophone.brickbreaker.event.GameEventManager
 import io.github.rolodophone.brickbreaker.util.getNotNull
 import ktx.ashley.has
 
-private const val BALL_SPEED = 10f
+private const val BALL_SPEED = 200f
 
 /**
  * Responsible for controlling the logic of aiming and firing the ball
