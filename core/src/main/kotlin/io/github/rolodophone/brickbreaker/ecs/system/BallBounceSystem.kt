@@ -24,12 +24,13 @@ class BallBounceSystem(private val gameViewport: Viewport):
 
 		val ballLeft = ballTransformComp.rect.x
 		val ballBottom = ballTransformComp.rect.y
-		val ballWidth = ballTransformComp.rect.width
-		val ballHeight = ballTransformComp.rect.height
+		val ballRight = ballTransformComp.rect.x + ballTransformComp.rect.width
+		val ballTop = ballTransformComp.rect.y + ballTransformComp.rect.height
 
 		val paddleTransformComp = engine.entities.first { it.has(PaddleComponent.mapper) }.getNotNull(TransformComponent.mapper)
 
 		val paddleTop = paddleTransformComp.rect.y + paddleTransformComp.rect.height
+		val paddleBottom = paddleTransformComp.rect.y
 		val paddleLeft = paddleTransformComp.rect.x
 		val paddleRight = paddleTransformComp.rect.x + paddleTransformComp.rect.width
 
@@ -39,18 +40,19 @@ class BallBounceSystem(private val gameViewport: Viewport):
 		}
 
 		//bounce off right wall
-		else if (ballLeft + ballWidth > gameViewport.worldWidth) {
+		else if (ballRight > gameViewport.worldWidth) {
 			ballMoveComp.velocity.x = -ballMoveComp.velocity.x.absoluteValue
 		}
 
 		//bounce off top wall
-		if (ballBottom + ballHeight > gameViewport.worldHeight) {
+		if (ballTop > gameViewport.worldHeight) {
 			ballMoveComp.velocity.y = -ballMoveComp.velocity.y.absoluteValue
 		}
 
 		//bounce off paddle
 		else if (ballBottom < paddleTop &&
-			ballLeft + ballWidth > paddleLeft &&
+			ballTop > paddleBottom &&
+			ballRight > paddleLeft &&
 			ballLeft < paddleRight
 		) {
 			ballMoveComp.velocity.y = ballMoveComp.velocity.y.absoluteValue
