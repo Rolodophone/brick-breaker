@@ -15,6 +15,18 @@ private const val MAX_DELTA_TIME = 1/10f
 class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 	override fun show() {
 
+		//background
+		engine.entity {
+			with<TransformComponent> {
+				setSizeFromTexture(textures.background)
+				rect.setPosition(0f, 0f)
+				z = -10
+			}
+			with<GraphicsComponent> {
+				sprite.setRegion(textures.background)
+			}
+		}
+
 		//paddle
 		engine.entity {
 			with<TransformComponent> {

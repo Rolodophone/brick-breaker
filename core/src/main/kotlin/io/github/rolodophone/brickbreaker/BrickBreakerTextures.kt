@@ -22,6 +22,7 @@ class BrickBreakerTextures: Disposable {
 	val brick_yellow = graphicsAtlas.findRegion("brick_yellow")!!
 	val firing_line = graphicsAtlas.findRegion("firing_line")!!
 	val paddle_normal = graphicsAtlas.findRegion("paddle_normal")!!
+	val background = graphicsAtlas.findRegion("background")!!
 
 	override fun dispose() {
 		graphicsAtlas.dispose()
