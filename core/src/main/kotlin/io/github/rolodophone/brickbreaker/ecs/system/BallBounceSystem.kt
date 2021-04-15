@@ -5,17 +5,15 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.utils.viewport.Viewport
 import io.github.rolodophone.brickbreaker.ecs.component.BallComponent
 import io.github.rolodophone.brickbreaker.ecs.component.MoveComponent
-import io.github.rolodophone.brickbreaker.ecs.component.PaddleComponent
 import io.github.rolodophone.brickbreaker.ecs.component.TransformComponent
 import io.github.rolodophone.brickbreaker.util.getNotNull
 import ktx.ashley.allOf
-import ktx.ashley.has
 import kotlin.math.absoluteValue
 
 /**
  * Makes the ball bounce off the walls and paddle
  */
-class BallBounceSystem(private val gameViewport: Viewport):
+class BallBounceSystem(private val gameViewport: Viewport, private val paddle: Entity):
 	IteratingSystem(allOf(BallComponent::class, TransformComponent::class, MoveComponent::class).get()) {
 
 	override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -27,7 +25,7 @@ class BallBounceSystem(private val gameViewport: Viewport):
 		val ballRight = ballTransformComp.rect.x + ballTransformComp.rect.width
 		val ballTop = ballTransformComp.rect.y + ballTransformComp.rect.height
 
-		val paddleTransformComp = engine.entities.first { it.has(PaddleComponent.mapper) }.getNotNull(TransformComponent.mapper)
+		val paddleTransformComp = paddle.getNotNull(TransformComponent.mapper)
 
 		val paddleTop = paddleTransformComp.rect.y + paddleTransformComp.rect.height
 		val paddleBottom = paddleTransformComp.rect.y

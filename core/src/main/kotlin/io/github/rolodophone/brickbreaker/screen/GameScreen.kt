@@ -3,6 +3,8 @@ package io.github.rolodophone.brickbreaker.screen
 import com.badlogic.gdx.math.Vector2
 import io.github.rolodophone.brickbreaker.BrickBreaker
 import io.github.rolodophone.brickbreaker.ecs.component.*
+import io.github.rolodophone.brickbreaker.ecs.system.*
+import io.github.rolodophone.brickbreaker.event.GameEventManager
 import io.github.rolodophone.brickbreaker.util.getNotNull
 import io.github.rolodophone.brickbreaker.util.halfWorldWidth
 import ktx.ashley.entity
@@ -13,10 +15,14 @@ private val tempVector = Vector2()
 private const val MAX_DELTA_TIME = 1/10f
 
 class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
+	private val gameEventManager = GameEventManager()
+
+	@Suppress("UNUSED_VARIABLE")
 	override fun show() {
 
-		//background
-		engine.entity {
+		// add entities
+
+		val background = engine.entity {
 			with<TransformComponent> {
 				setSizeFromTexture(textures.background)
 				rect.setPosition(0f, 0f)
@@ -27,8 +33,7 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			}
 		}
 
-		//paddle
-		engine.entity {
+		val paddle = engine.entity {
 			with<TransformComponent> {
 				setSizeFromTexture(textures.paddle_normal)
 				rect.setCenter(gameViewport.halfWorldWidth(), PaddleComponent.Y)
@@ -39,7 +44,6 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			with<PaddleComponent>()
 		}
 
-		//ball
 		val ball = engine.entity {
 			with<TransformComponent> {
 				setSizeFromTexture(textures.ball)
@@ -55,8 +59,7 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			with<BallComponent>()
 		}
 
-		//firing line
-		engine.entity {
+		val firingLine = engine.entity {
 			with<TransformComponent> {
 				setSizeFromTexture(textures.firing_line)
 				rect.setPosition(ball.getNotNull(TransformComponent.mapper).rect.getCenter(tempVector))
@@ -68,6 +71,16 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 				visible = false
 			}
 			with<FiringLineComponent>()
+		}
+
+		//add systems to engine
+		engine.run {
+			addSystem(PlayerInputSystem(gameViewport, gameEventManager))
+			addSystem(DebugSystem())
+			addSystem(AimAndFireSystem(gameEventManager, paddle, ball, firingLine))
+			addSystem(MoveSystem())
+			addSystem(BallBounceSystem(gameViewport, paddle))
+			addSystem(RenderSystem(batch, gameViewport))
 		}
 	}
 
