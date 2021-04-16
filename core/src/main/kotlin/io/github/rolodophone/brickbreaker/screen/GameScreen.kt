@@ -76,6 +76,17 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			with<FiringLineComponent>()
 		}
 
+		val brick = engine.entity {
+			with<TransformComponent> {
+				setSizeFromTexture(textures.brick_red)
+				rect.setCenter(gameViewport.halfWorldWidth(), gameViewport.worldHeight - 60)
+			}
+			with<GraphicsComponent> {
+				sprite.setRegion(textures.brick_red)
+			}
+			with<BrickComponent>()
+		}
+
 		//add systems to engine
 		engine.run {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager, WALL_WIDTH))
