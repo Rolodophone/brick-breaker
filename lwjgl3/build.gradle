@@ -32,5 +32,6 @@ jar {
 	doLast {
 		file(archivePath).setExecutable(true, false)
 	}
+	version(myVersionName)
 }
 
