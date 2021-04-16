@@ -94,7 +94,7 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			addSystem(AimAndFireSystem(gameEventManager, paddle, ball, firingLine))
 			addSystem(MoveSystem())
 			addSystem(SpinSystem())
-			addSystem(BallBounceSystem(gameViewport, paddle, WALL_WIDTH))
+			addSystem(BallBounceSystem(gameViewport, paddle, WALL_WIDTH, setOf(brick)))
 			addSystem(RenderSystem(batch, gameViewport))
 		}
 	}
