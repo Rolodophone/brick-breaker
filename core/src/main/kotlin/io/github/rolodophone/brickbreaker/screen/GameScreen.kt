@@ -22,10 +22,6 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 	@Suppress("UNUSED_VARIABLE")
 	override fun show() {
 
-		//move viewport to bottom of screen so there's no gap at the bottom
-		//TODO (and maybe fix the line below
-		gameViewport.update(gameViewport.screenWidth, gameViewport.screenHeight, true)
-
 		// add entities
 
 		val background = engine.entity {
@@ -96,10 +92,6 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 		//remove game entities and systems
 		engine.removeAllEntities()
 		engine.removeAllSystems()
-
-		//move the viewport back to the center
-		//TODO
-		gameViewport.apply(true)
 	}
 
 	override fun render(delta: Float) {
