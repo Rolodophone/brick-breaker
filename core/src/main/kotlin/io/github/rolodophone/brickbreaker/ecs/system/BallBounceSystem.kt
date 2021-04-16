@@ -10,7 +10,13 @@ import ktx.ashley.allOf
 import kotlin.math.absoluteValue
 
 private const val ANGULAR_DECELERATION = 100f
-private const val MAX_ANGULAR_VELOCITY = 100f
+private const val MAX_ANGULAR_VELOCITY = 200f
+
+/**
+ * When the ball hits the paddle, [PaddleComponent.velocity] * [ANGULAR_VELOCITY_PER_PADDLE_VELOCITY] is added to its
+ * [SpinComponent.angularVelocity]
+ */
+private const val ANGULAR_VELOCITY_PER_PADDLE_VELOCITY = 0.3f
 
 /**
  * Makes the ball bounce off the walls and paddle
@@ -60,7 +66,7 @@ class BallBounceSystem(private val gameViewport: Viewport, private val paddle: E
 			ballMoveComp.velocity.y = ballMoveComp.velocity.y.absoluteValue
 
 			//spin the ball depending on paddle's velocity
-			ballSpinComp.angularVelocity += paddlePaddleComp.velocity
+			ballSpinComp.angularVelocity += ANGULAR_VELOCITY_PER_PADDLE_VELOCITY * paddlePaddleComp.velocity
 
 			//avoid spinning too much
 			ballSpinComp.angularVelocity = MathUtils.clamp(
@@ -76,9 +82,6 @@ class BallBounceSystem(private val gameViewport: Viewport, private val paddle: E
 			else {
 				ballSpinComp.angularAcceleration = ANGULAR_DECELERATION
 			}
-
-			//boring spin
-//			ballMoveComp.velocity.x -= paddlePaddleComp.velocity
 		}
 	}
 }
