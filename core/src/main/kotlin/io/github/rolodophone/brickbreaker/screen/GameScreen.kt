@@ -1,6 +1,8 @@
 package io.github.rolodophone.brickbreaker.screen
 
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.Box2D
+import com.badlogic.gdx.physics.box2d.World
 import io.github.rolodophone.brickbreaker.BrickBreaker
 import io.github.rolodophone.brickbreaker.ecs.component.*
 import io.github.rolodophone.brickbreaker.ecs.system.*
@@ -9,6 +11,7 @@ import io.github.rolodophone.brickbreaker.util.getNotNull
 import io.github.rolodophone.brickbreaker.util.halfWorldWidth
 import ktx.ashley.entity
 import ktx.ashley.with
+import ktx.box2d.createWorld
 
 private val tempVector = Vector2()
 
@@ -18,9 +21,13 @@ private const val WALL_WIDTH = 3f
 
 class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 	private val gameEventManager = GameEventManager()
+	private lateinit var world: World
 
 	@Suppress("UNUSED_VARIABLE")
 	override fun show() {
+		//set up Box2d
+		Box2D.init()
+		world = createWorld()
 
 		// add entities
 
@@ -94,7 +101,7 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			addSystem(AimAndFireSystem(gameEventManager, paddle, ball, firingLine))
 			addSystem(MoveSystem())
 			addSystem(SpinSystem())
-			addSystem(BallBounceSystem(gameViewport, paddle, WALL_WIDTH, setOf(brick)))
+			addSystem(BallBounceSystem(gameViewport, paddle, WALL_WIDTH))
 			addSystem(RenderSystem(batch, gameViewport))
 		}
 	}

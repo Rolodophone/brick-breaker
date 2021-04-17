@@ -19,15 +19,19 @@ private val log = logger<BrickBreaker>()
 
 class BrickBreaker: KtxGame<BrickBreakerScreen>() {
 	val gameViewport = FitViewport(180f, 320f)
-	val batch: Batch by lazy { SpriteBatch(BATCH_SIZE) }
-	val brickBreakerTextures: BrickBreakerTextures by lazy { BrickBreakerTextures() }
-	val engine: Engine by lazy { PooledEngine() }
+	lateinit var batch: Batch
+	lateinit var brickBreakerTextures: BrickBreakerTextures
+	lateinit var engine: Engine
 
 	override fun create() {
 		Gdx.app.logLevel = LOG_DEBUG
 
-		addScreen(GameScreen(this))
+		//init stuff
+		batch = SpriteBatch(BATCH_SIZE)
+		brickBreakerTextures = BrickBreakerTextures()
+		engine = PooledEngine()
 
+		addScreen(GameScreen(this))
 		setScreen<GameScreen>()
 	}
 

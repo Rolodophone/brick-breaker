@@ -24,8 +24,7 @@ private const val ANGULAR_VELOCITY_PER_PADDLE_VELOCITY = 0.3f
 class BallBounceSystem(
 	private val gameViewport: Viewport,
 	private val paddle: Entity,
-	private val wallWidth: Float,
-	private val bricks: Set<Entity>
+	private val wallWidth: Float
 ):
 IteratingSystem(allOf(BallComponent::class, TransformComponent::class, MoveComponent::class).get()) {
 	override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -87,44 +86,5 @@ IteratingSystem(allOf(BallComponent::class, TransformComponent::class, MoveCompo
 				ballSpinComp.angularAcceleration = ANGULAR_DECELERATION
 			}
 		}
-
-		//bounce off bricks
-		var bouncedOffVerticalObject = false
-		var bouncedOffHorizontalObject = false
-
-		for (brick in bricks) {
-			val rectTransformComp = brick.getNotNull(TransformComponent.mapper)
-			val brickBottom = rectTransformComp.rect.y
-			val brickLeft = rectTransformComp.rect.x
-			val brickTop = rectTransformComp.rect.y + rectTransformComp.rect.height
-			val brickRight = rectTransformComp.rect.x + rectTransformComp.rect.width
-
-			if (ballTransformComp.rect.overlaps(rectTransformComp.rect)) {
-				if
-			}
-		}
 	}
 }
-//if (!bouncedOffHorizontalObject) { //bounce horizontally if it hasn't already
-//	if (ballLeft < brickRight) {
-//		ballMoveComp.velocity.x = ballMoveComp.velocity.x.absoluteValue
-//		bouncedOffHorizontalObject = true
-//	}
-//	else if (ballRight > brickLeft) {
-//		ballMoveComp.velocity.x = -ballMoveComp.velocity.x.absoluteValue
-//		bouncedOffHorizontalObject = true
-//	}
-//}
-//else if (!bouncedOffVerticalObject) { // bounce vertically if it hasn't already
-//	if (ballBottom < brickTop) {
-//		ballMoveComp.velocity.y = ballMoveComp.velocity.y.absoluteValue
-//		bouncedOffVerticalObject = true
-//	}
-//	else if (ballTop > brickBottom) {
-//		ballMoveComp.velocity.y = -ballMoveComp.velocity.y.absoluteValue
-//		bouncedOffVerticalObject = true
-//	}
-//}
-//else { // if it's bounced both ways we don't want to bounce any more
-//	break
-//}
