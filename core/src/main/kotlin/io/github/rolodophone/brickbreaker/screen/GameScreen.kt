@@ -1,8 +1,7 @@
 package io.github.rolodophone.brickbreaker.screen
 
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.Box2D
-import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.physics.box2d.*
 import io.github.rolodophone.brickbreaker.BrickBreaker
 import io.github.rolodophone.brickbreaker.ecs.component.*
 import io.github.rolodophone.brickbreaker.ecs.system.*
@@ -28,6 +27,29 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 		//set up Box2d
 		Box2D.init()
 		world = createWorld()
+
+		//TODO remove
+//		val myBox = world.body {
+//			box(width = 40f, height = 20f)
+//		}
+		val bodyDef = BodyDef()
+		bodyDef.type = BodyDef.BodyType.DynamicBody
+		bodyDef.position.set(30f, 40f)
+
+		val body = world.createBody(bodyDef)
+
+		val circle = CircleShape()
+		circle.radius = 6f
+
+		val fixtureDef = FixtureDef()
+		fixtureDef.shape = circle
+		fixtureDef.density = 0.5f
+		fixtureDef.friction = 0.4f
+		fixtureDef.restitution = 0.6f
+
+		val fixture = body.createFixture(fixtureDef)
+
+		circle.dispose();
 
 		// add entities
 
@@ -94,15 +116,15 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 			with<BrickComponent>()
 		}
 
-		//add systems to engine
+		//add systems to engine (it is recommended to render *before* stepping the physics for some reason)
 		engine.run {
 			addSystem(PlayerInputSystem(gameViewport, gameEventManager, WALL_WIDTH))
-			addSystem(DebugSystem(gameEventManager, paddle, ball))
+			addSystem(RenderSystem(batch, gameViewport))
 			addSystem(AimAndFireSystem(gameEventManager, paddle, ball, firingLine))
-			addSystem(MoveSystem())
+			addSystem(PhysicsSystem(world))
 			addSystem(SpinSystem())
 			addSystem(BallBounceSystem(gameViewport, paddle, WALL_WIDTH))
-			addSystem(RenderSystem(batch, gameViewport))
+			addSystem(DebugSystem(gameEventManager, paddle, ball, world, gameViewport))
 		}
 	}
 
@@ -110,10 +132,16 @@ class GameScreen(game: BrickBreaker): BrickBreakerScreen(game) {
 		//remove game entities and systems
 		engine.removeAllEntities()
 		engine.removeAllSystems()
+
+		world.dispose()
 	}
 
 	override fun render(delta: Float) {
 		val newDeltaTime = if (delta > MAX_DELTA_TIME) MAX_DELTA_TIME else delta
 		engine.update(newDeltaTime)
+	}
+
+	override fun resize(width: Int, height: Int) {
+		gameViewport.update(width, height, true)
 	}
 }
